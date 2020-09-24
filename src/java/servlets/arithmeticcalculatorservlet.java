@@ -30,15 +30,24 @@ public class arithmeticcalculatorservlet extends HttpServlet {
         String firstValueString = request.getParameter("firstValue");       
         String secondValueString = request.getParameter("secondValue");
         
-        if(firstValueString != null && firstValueString.length() != 0 && secondValueString != null && secondValueString.length() != 0){
+        if(firstValueString != null && firstValueString.length() != 0){
             try{
                 firstValueInt = Integer.parseInt(firstValueString);
-                secondValueInt = Integer.parseInt(secondValueString);
             }catch(NumberFormatException e){
-                request.setAttribute("message","Result: invalid");
+                request.setAttribute("message","Result: Invalid");
                 getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
                 .forward(request, response);
-            } 
+            }
+        }
+        if(secondValueString != null && secondValueString.length() != 0){
+            try{
+                secondValueInt = Integer.parseInt(secondValueString);
+            }catch(NumberFormatException e){
+                request.setAttribute("message","Result: Invalid");
+                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                .forward(request, response);
+            }
+        } 
         
         String submit = request.getParameter("submit");
         switch(submit){
@@ -56,12 +65,13 @@ public class arithmeticcalculatorservlet extends HttpServlet {
                 addedValue = firstValueInt%secondValueInt;
                 break;
         }
-        }
+        
         request.setAttribute("message","Result: " +addedValue);
         getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
                 .forward(request, response);
         
         
+}
+}
 
-}
-}
+
